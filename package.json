@@ -1,0 +1,32 @@
+{
+  "name": "river_styx.gocd-websocket-notifier-to-rabbitmq",
+  "version": "0.0.1",
+  "description": "River Styx component, listens to a websocket server gocd notifier plugin.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "grunt",
+    "start": "node lib/index.js"
+  },
+  "author": "Steve Elliott",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-jshint": "~0.4.3",
+    "mocha": "~1.12.1",
+    "grunt-mocha-cli": "~1.7.0",
+    "load-grunt-tasks": "~0.4.0",
+    "jshint-stylish": "~0.1.5",
+    "expect.js": "~0.3.1",
+    "nock": "^0.31.0",
+    "proxyquire": "^0.6.0",
+    "redis-mock": "^0.3.0"
+  },
+  "dependencies": {
+    "amqp": "^0.2.0",
+    "bluebird": "^2.1.2",
+    "lodash": "^3.9.3",
+    "logall": "0.0.1",
+    "moment": "^2.6.0",
+    "redis": "^0.10.3"
+  }
+}
