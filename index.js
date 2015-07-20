@@ -5,8 +5,7 @@ var url = 'ws://go.laterooms.com:8887';
 var Amqp = require('./lib/amqp');
 
 var rabbitConnection = new Amqp({
-	host: '10.44.72.42',
-	port: 5672,
+	host: 'localhost',
 	exchange: 'river-styx'
 });
 
