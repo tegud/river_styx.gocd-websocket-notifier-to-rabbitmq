@@ -1,10 +1,41 @@
 var WebSocket = require('ws');
-var ws = new WebSocket('ws://go.laterooms.com:8887');
+var connectionRetryTimer;
+var ws;
+var url = 'ws://go.laterooms.com:8887';
+var Amqp = require('./lib/amqp');
 
-ws.on('open', function() {
-    console.log('connected');
+var rabbitConnection = new Amqp({
+	host: '10.44.72.42',
+	port: 5672,
+	exchange: 'river-styx'
 });
 
-ws.on('message', function(message) {
-    console.log('received: %s', message);
-});
+function connectionAttempt() {
+    console.log('Attempting to websocket connection to: ' + url);
+	ws = new WebSocket(url);
+
+	ws.on('open', function() {
+		clearTimeout(connectionRetryTimer);
+	    console.log('Connection Made.');
+	});
+
+	ws.on('close', function() {
+	    console.log('Connection Dropped, retrying...');
+		connectionAttempt();
+	});
+
+	ws.on('message', function(message) {
+	    console.log('received: %s', message);
+
+	    rabbitConnection.publish('pipelineResult', {
+	    	'@timestamp': moment().format(),
+	    	type: 'pipelineResult',
+	    	origin: 'go.laterooms.com',
+	    	result: message
+	    });
+	});
+
+	connectionRetryTimer = setTimeout(connectionAttempt, 30000);
+}
+
+rabbitConnection.start().then(connectionAttempt)
