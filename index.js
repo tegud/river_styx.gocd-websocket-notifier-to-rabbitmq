@@ -31,7 +31,7 @@ function connectionAttempt() {
 	    	'@timestamp': moment().format(),
 	    	type: 'pipelineResult',
 	    	origin: 'go.laterooms.com',
-	    	result: message
+	    	result: JSON.parse(message)
 	    });
 	});
 
