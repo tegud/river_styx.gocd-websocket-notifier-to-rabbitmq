@@ -25,8 +25,6 @@ function connectionAttempt() {
 	});
 
 	ws.on('message', function(message) {
-	    console.log('received: %s', message);
-
 	    rabbitConnection.publish('pipelineResult', {
 	    	'@timestamp': moment().format(),
 	    	type: 'pipelineResult',
