@@ -1,4 +1,4 @@
-pvar WebSocket = require('ws');
+var WebSocket = require('ws');
 var moment = require('moment');
 var connectionRetryTimer;
 var ws;
