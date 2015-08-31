@@ -1,4 +1,4 @@
-var WebSocket = require('ws');
+pvar WebSocket = require('ws');
 var moment = require('moment');
 var connectionRetryTimer;
 var ws;
@@ -21,6 +21,11 @@ function connectionAttempt() {
 
 	ws.on('close', function() {
 	    console.log('Connection Dropped, retrying...');
+		connectionAttempt();
+	});
+
+	ws.on('error', function() {
+	    console.log('Connection Error, retrying...');
 		connectionAttempt();
 	});
 
