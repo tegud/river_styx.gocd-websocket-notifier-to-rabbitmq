@@ -4,6 +4,7 @@ var connectionRetryTimer;
 var ws;
 var url = 'ws://go.laterooms.com:8887';
 var Amqp = require('./lib/amqp');
+var logger = require('./lib/logger');
 
 var rabbitConnection = new Amqp({
 	host: 'localhost',
@@ -11,21 +12,21 @@ var rabbitConnection = new Amqp({
 });
 
 function connectionAttempt() {
-    console.log('Attempting to websocket connection to: ' + url);
+    logger.logInfo('Attempting to websocket connection.', { url: url });
 	ws = new WebSocket(url);
 
 	ws.on('open', function() {
 		clearTimeout(connectionRetryTimer);
-	    console.log('Connection Made.');
+	    logger.logInfo('Connection Made.');
 	});
 
 	ws.on('close', function() {
-	    console.log('Connection Dropped, retrying...');
+	    logger.logInfo('Connection Dropped, retrying...');
 		connectionAttempt();
 	});
 
-	ws.on('error', function() {
-	    console.log('Connection Error, retrying...');
+	ws.on('error', function(err) {
+	    logger.logInfo('Connection Error, retrying...', { error: JSON.stringify(err) });
 		connectionAttempt();
 	});
 
