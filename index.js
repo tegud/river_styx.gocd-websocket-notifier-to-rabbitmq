@@ -12,6 +12,7 @@ var rabbitConnection = new Amqp({
 });
 
 function connectionAttempt() {
+	var closing;
     logger.logInfo('Attempting to websocket connection.', { url: url });
 	ws = new WebSocket(url);
 
@@ -21,12 +22,20 @@ function connectionAttempt() {
 	});
 
 	ws.on('close', function() {
+		if(closing) {
+			return;
+		}
+
+		closing = true;
 	    logger.logInfo('Connection Dropped, retrying...');
+		process.exit(1);
 		connectionAttempt();
 	});
 
 	ws.on('error', function(err) {
 	    logger.logInfo('Connection Error, retrying...', { error: JSON.stringify(err) });
+		closing = true;
+		ws.close();
 		connectionAttempt();
 	});
 
