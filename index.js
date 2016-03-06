@@ -11,6 +11,8 @@ var rabbitConnection = new Amqp({
 	exchange: 'river-styx'
 });
 
+var retries = 0;
+
 function connectionAttempt() {
 	var closing;
     logger.logInfo('Attempting to websocket connection.', { url: url });
@@ -19,6 +21,8 @@ function connectionAttempt() {
 	ws.on('open', function() {
 		clearTimeout(connectionRetryTimer);
 	    logger.logInfo('Connection Made.');
+
+		retries = 0;
 	});
 
 	ws.on('close', function() {
@@ -27,16 +31,20 @@ function connectionAttempt() {
 		}
 
 		closing = true;
-	    logger.logInfo('Connection Dropped, retrying...');
+	    logger.logInfo('Connection Dropped, exiting...');
 		process.exit(1);
-		connectionAttempt();
 	});
 
 	ws.on('error', function(err) {
-	    logger.logInfo('Connection Error, retrying...', { error: JSON.stringify(err) });
-		closing = true;
-		ws.close();
-		connectionAttempt();
+		retries++;
+
+		if(retries > 5) {
+			logger.logInfo('Connection failed after 5 tries, shutting down');
+			process.exit(1);
+		}
+		else {
+			logger.logInfo('Connection Error, retrying (' + retries + ')...');
+		}
 	});
 
 	ws.on('message', function(message) {
