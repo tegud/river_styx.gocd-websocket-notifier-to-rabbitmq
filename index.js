@@ -15,7 +15,7 @@ var retries = 0;
 
 function connectionAttempt() {
 	var closing;
-    logger.logInfo('Attempting to websocket connection.', { url: url });
+    logger.logInfo('Attempting to create websocket connection.', { url: url });
 	ws = new WebSocket(url);
 
 	ws.on('open', function() {
@@ -55,8 +55,6 @@ function connectionAttempt() {
 	    	result: JSON.parse(message)
 	    });
 	});
-
-	connectionRetryTimer = setTimeout(connectionAttempt, 30000);
 }
 
 rabbitConnection.start().then(connectionAttempt)
