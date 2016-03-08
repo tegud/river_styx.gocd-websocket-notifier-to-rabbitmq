@@ -44,6 +44,7 @@ function connectionAttempt() {
 		}
 		else {
 			logger.logInfo('Connection Error, retrying (' + retries + ')...');
+			connectionAttempt();
 		}
 	});
 
