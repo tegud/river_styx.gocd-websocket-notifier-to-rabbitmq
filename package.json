@@ -1,6 +1,6 @@
 {
   "name": "river_styx.gocd-websocket-notifier-to-rabbitmq",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "River Styx component, listens to a websocket server gocd notifier plugin.",
   "main": "lib/index.js",
   "scripts": {
@@ -23,11 +23,9 @@
   },
   "dependencies": {
     "amqp": "^0.2.0",
-    "bluebird": "^2.1.2",
-    "lodash": "^3.9.3",
+    "express": "^4.14.0",
     "logall": "0.0.1",
     "moment": "^2.15.1",
-    "redis": "^0.10.3",
     "websocket": "^1.0.23"
   }
 }
