@@ -23,6 +23,6 @@
   },
   "dependencies": {
     "logall": "0.0.1",
-    "rs-core": "0.0.9"
+    "rs-core": "0.0.10"
   }
 }
