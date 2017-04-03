@@ -22,8 +22,8 @@
     "redis-mock": "^0.3.0"
   },
   "dependencies": {
-    "logall": "0.0.1",
-    "rs-amqp-publisher": "^0.1.0",
+    "logall": "1.0.0",
+    "rs-amqp-publisher": "^0.4.0",
     "rs-core": "2.0.0",
     "rs-http-server": "^0.1.0",
     "rs-websocket": "^0.1.0"
