@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "logall": "1.0.0",
-    "rs-amqp-publisher": "^0.4.0",
+    "rs-amqp-publisher": "^0.3.2",
     "rs-core": "2.0.0",
     "rs-http-server": "^0.1.0",
     "rs-websocket": "^0.1.0"
